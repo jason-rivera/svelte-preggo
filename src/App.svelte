@@ -32,13 +32,14 @@
 </script>
 
 <main class="main-container">
-  <div class="subtitle">what can you eat when you're</div>
+  <div class="subtitle">what can I have when I'm</div>
   <div class="title">PREGGO?</div>
   <input on:keypress={handleEnterPress} id="item-input" type="text" />
-  <br />
 
   {#if isLoading}
-    <Circle size="75" color="#FF3E00" unit="px" duration="1s" />
+    <div id="loading-circle">
+      <Circle size="75" color="#FF3E00" unit="px" duration="1s" />
+    </div>
   {:else}
     <div id="ask-btn" on:click={handleSubmit} on:keypress={handleSubmit}>
       Ask
@@ -50,12 +51,14 @@
 
 <style>
   .main-container {
-    margin-top: 100px;
-    text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
     padding: 20px;
+    transition: 300ms all;
   }
 
   .title {
@@ -76,7 +79,6 @@
     border: none;
   }
 
-  textarea:focus,
   input:focus {
     outline: none;
   }
@@ -88,6 +90,11 @@
     cursor: pointer;
     transition: 300ms all;
     font-weight: bold;
+    margin: 30px;
+  }
+
+  #loading-circle {
+    margin: 30px;
   }
 
   #ask-btn:hover {
@@ -95,9 +102,9 @@
     opacity: 0.8;
   }
 
-  .answer {
-    padding-top: 20px;
+  #answer {
     text-align: left;
     max-width: 500px;
+    padding: 0 20px;
   }
 </style>
