@@ -7,6 +7,8 @@
   const handleSubmit = async () => {
     try {
       isLoading = true;
+      document.getElementById('answer').innerHTML = '';
+      
       const response = await axios.post('https://lknishac40.execute-api.eu-central-1.amazonaws.com/prod/preggo', {
       // const response = await axios.post('https://netlify-jason-rivera-serverless-functions.netlify.app/.netlify/functions/api/preggo', {
         item: document.getElementById('item-input').value,
@@ -27,15 +29,13 @@
 </script>
 
 <main class="main-container">
-	<h3>what can you eat when you're</h3>
-	<h1>PREGGO?</h1>
-  <div>
-    <input on:keypress={handleEnterPress} id="item-input" type="text" />
-  </div>
+	<div class="subtitle">what can you eat when you're</div>
+	<div class="title">PREGGO?</div>
+  <input on:keypress={handleEnterPress} id="item-input" type="text" />
   <br/>
 
   {#if isLoading}
-    <Circle size="35" color="#FF3E00" unit="px" duration="1s"/>
+    <Circle size="75" color="#FF3E00" unit="px" duration="1s"/>
   {:else}
     <div id="ask-btn" on:click={handleSubmit} on:keypress={handleSubmit}>Ask</div>
   {/if}
@@ -54,17 +54,35 @@
   padding: 20px;
 }
 
+.title {
+  font-size: 4rem;
+  font-weight: 900;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+}
+
 #item-input {
   text-align: center;
-  padding: 5px;
+  font-size: 1.5rem;
+  padding: 10px;
   font-size: 1.1rem;
+  border-radius: 20px;
+  border: none;
+}
+
+textarea:focus, input:focus{
+  outline: none;
 }
 #ask-btn {
+  font-size: 1.4rem;
   background: #FF3E00;
   border-radius: 50%;
-  padding: 10px;
+  padding: 20px;
   cursor: pointer;
   transition: 300ms all;
+  font-weight: bold;
 }
 
 #ask-btn:hover {
