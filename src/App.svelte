@@ -7,7 +7,8 @@
   const handleSubmit = async () => {
     try {
       isLoading = true;
-      const response = await axios.post('https://netlify-jason-rivera-serverless-functions.netlify.app/.netlify/functions/api/preggo', {
+      const response = await axios.post('https://lknishac40.execute-api.eu-central-1.amazonaws.com/prod/preggo', {
+      // const response = await axios.post('https://netlify-jason-rivera-serverless-functions.netlify.app/.netlify/functions/api/preggo', {
         item: document.getElementById('item-input').value,
       });
       document.getElementById('answer').innerHTML = response.data.completion.content;
