@@ -8,32 +8,44 @@
     ? JSON.parse(localStorage.getItem('items'))
     : [];
 
-  const addToLocalStorage = () => {
+  const addToLocalStorage = (itemAnswer) => {
     const items = localStorage.getItem('items')
       ? JSON.parse(localStorage.getItem('items'))
       : [];
-    items.push(document.getElementById('item-input').value);
+    items.push(
+      new Array(document.getElementById('item-input').value, itemAnswer)
+    );
     localStorage.setItem('items', JSON.stringify(items));
-    displayLocalStorage();
   };
 
   const displayLocalStorage = () => {
     const items = localStorage.getItem('items')
       ? JSON.parse(localStorage.getItem('items'))
       : [];
+
+    // console.log(items[0]);
+
+    const itemInput = document.getElementById('item-input');
     const history = document.getElementById('history');
     history.innerHTML = '';
 
     items.reverse().forEach((item, i) => {
+      console.log(item[0] + ' hello');
       if (i > 10) return;
       const itemDiv = document.createElement('div');
-      itemDiv.innerHTML = item;
+      itemDiv.addEventListener('click', () => {
+        itemInput.value = item[0];
+
+        const answer = document.getElementById('answer');
+        answer.innerHTML = item[1];
+        closeMenu();
+      });
+      itemDiv.innerHTML = item[0];
       history.appendChild(itemDiv);
     });
   };
 
   const handleSubmit = async () => {
-    addToLocalStorage();
     try {
       isLoading = true;
       document.getElementById('answer').innerHTML = '';
@@ -41,12 +53,15 @@
       const response = await axios.post(
         'https://lknishac40.execute-api.eu-central-1.amazonaws.com/prod/preggo',
         {
-          // const response = await axios.post('https://netlify-jason-rivera-serverless-functions.netlify.app/.netlify/functions/api/preggo', {
+          // const response = await axios.post('https://netlify-jason-rivera-serverless-functions.netlify.app/.netlify/functions/api/preggo',
           item: document.getElementById('item-input').value,
         }
       );
-      document.getElementById('answer').innerHTML =
-        response.data.completion.content;
+
+      let answer = response.data.completion.content;
+
+      document.getElementById('answer').innerHTML = answer;
+      addToLocalStorage(answer);
     } catch (e) {
       console.log(e);
     }
@@ -167,6 +182,7 @@
     font-size: 1.5rem;
     cursor: pointer;
     background: red;
+    font-weight: bold;
   }
 
   .close-button {
@@ -176,6 +192,7 @@
     background: red;
     text-align: right;
     color: black;
+    font-weight: bold;
   }
 
   .side-nav {
