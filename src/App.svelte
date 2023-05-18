@@ -4,17 +4,23 @@
 
   let isLoading = false;
 
-  $: items = localStorage.getItem('items')
-    ? JSON.parse(localStorage.getItem('items'))
-    : [];
+  // $: items = localStorage.getItem('items')
+  //   ? JSON.parse(localStorage.getItem('items'))
+  //   : [];
 
   const addToLocalStorage = (itemAnswer) => {
-    const items = localStorage.getItem('items')
+    let items = localStorage.getItem('items')
       ? JSON.parse(localStorage.getItem('items'))
       : [];
+
+    if (items.length > 9) {
+      items.shift();
+    }
+
     items.push(
       new Array(document.getElementById('item-input').value, itemAnswer)
     );
+
     localStorage.setItem('items', JSON.stringify(items));
   };
 
@@ -23,14 +29,11 @@
       ? JSON.parse(localStorage.getItem('items'))
       : [];
 
-    // console.log(items[0]);
-
     const itemInput = document.getElementById('item-input');
     const history = document.getElementById('history');
     history.innerHTML = '';
 
     items.reverse().forEach((item, i) => {
-      console.log(item[0] + ' hello');
       if (i > 10) return;
       const itemDiv = document.createElement('div');
       itemDiv.addEventListener('click', () => {
@@ -63,7 +66,7 @@
       document.getElementById('answer').innerHTML = answer;
       addToLocalStorage(answer);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
     isLoading = false;
   };
