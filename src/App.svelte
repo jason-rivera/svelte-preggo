@@ -4,7 +4,36 @@
 
   let isLoading = false;
 
+  $: items = localStorage.getItem('items')
+    ? JSON.parse(localStorage.getItem('items'))
+    : [];
+
+  const addToLocalStorage = () => {
+    const items = localStorage.getItem('items')
+      ? JSON.parse(localStorage.getItem('items'))
+      : [];
+    items.push(document.getElementById('item-input').value);
+    localStorage.setItem('items', JSON.stringify(items));
+    displayLocalStorage();
+  };
+
+  const displayLocalStorage = () => {
+    const items = localStorage.getItem('items')
+      ? JSON.parse(localStorage.getItem('items'))
+      : [];
+    const history = document.getElementById('history');
+    history.innerHTML = '';
+
+    items.reverse().forEach((item, i) => {
+      if (i > 10) return;
+      const itemDiv = document.createElement('div');
+      itemDiv.innerHTML = item;
+      history.appendChild(itemDiv);
+    });
+  };
+
   const handleSubmit = async () => {
+    addToLocalStorage();
     try {
       isLoading = true;
       document.getElementById('answer').innerHTML = '';
@@ -29,6 +58,14 @@
       handleSubmit();
     }
   };
+
+  const openMenu = () => {
+    document.getElementById('side-nav').style.left = 'calc(100vw - 200px)';
+  };
+
+  const closeMenu = () => {
+    document.getElementById('side-nav').style.left = '100vw';
+  };
 </script>
 
 <main class="main-container">
@@ -47,10 +84,18 @@
   {/if}
 
   <div id="answer" class="answer" />
+  <div class="nav-menu">
+    <div id="open-btn" class="nav-button" on:click={openMenu}>History</div>
+  </div>
+  <div id="side-nav" class="side-nav">
+    <div class="history-items" on:click={closeMenu}>Close</div>
+    <div id="history" />
+  </div>
 </main>
 
 <style>
   .main-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -59,6 +104,7 @@
     text-align: center;
     padding: 20px;
     transition: 300ms all;
+    overflow-x: hidden;
   }
 
   .title {
@@ -106,5 +152,36 @@
     text-align: left;
     max-width: 500px;
     padding: 0 20px;
+  }
+
+  /** Nav Menu */
+  .nav-menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .nav-button {
+    padding: 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  .side-nav {
+    position: absolute;
+    overflow: hidden;
+    transition: 300ms all;
+    background: #ff3e00;
+    top: 0;
+    left: 100vw;
+    height: 100vh;
+    width: 200px;
+  }
+
+  .history-items {
+    padding: 15px;
+    font-size: 1.5rem;
+    text-align: right;
+    cursor: pointer;
   }
 </style>
