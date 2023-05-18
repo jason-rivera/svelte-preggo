@@ -8,6 +8,16 @@
   //   ? JSON.parse(localStorage.getItem('items'))
   //   : [];
 
+  /** TEST: Highlight all text in input text field after clicking on input text field */
+
+  // window.addEventListener('DOMContentLoaded', (event) => {
+  //   const itemInput = document.getElementById('item-input');
+  //   itemInput.addEventListener('click', () => {
+  //     this.focus();
+  //     this.select();
+  //   });
+  // });
+
   const addToLocalStorage = (itemAnswer) => {
     let items = localStorage.getItem('items')
       ? JSON.parse(localStorage.getItem('items'))
@@ -104,10 +114,12 @@
 
   <div id="answer" class="answer" />
   <div class="nav-menu">
-    <div id="open-btn" class="open-button" on:click={openMenu}>History</div>
+    <button id="open-btn" class="open-button" on:click={openMenu}
+      >History</button
+    >
   </div>
   <div id="side-nav" class="side-nav">
-    <div class="close-button" on:click={closeMenu}>Close</div>
+    <button class="close-button" on:click={closeMenu}>Close</button>
     <div id="history" class="history-items" />
   </div>
 </main>
@@ -186,16 +198,8 @@
     cursor: pointer;
     background: red;
     font-weight: bold;
-  }
-
-  .close-button {
-    padding: 15px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    background: red;
-    text-align: right;
-    color: black;
-    font-weight: bold;
+    color: white;
+    border: none;
   }
 
   .side-nav {
@@ -207,6 +211,19 @@
     left: 100vw;
     height: 100vh;
     width: 200px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .close-button {
+    align-self: flex-end;
+    padding: 15px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    background: red;
+    color: black;
+    font-weight: bold;
+    border: none;
   }
 
   .history-items {
@@ -215,5 +232,6 @@
     gap: 20px;
     font-size: 1.5rem;
     font-weight: bold;
+    cursor: pointer;
   }
 </style>
