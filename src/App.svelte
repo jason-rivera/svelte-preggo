@@ -118,10 +118,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+
     height: 100vh;
     text-align: center;
-    padding: 20px;
+    padding: 80px 20px;
     transition: 300ms all;
     overflow-x: hidden;
   }
@@ -175,7 +175,7 @@
 
   /** Nav Menu */
   .nav-menu {
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
   }
@@ -199,7 +199,7 @@
   }
 
   .side-nav {
-    position: absolute;
+    position: fixed;
     overflow: hidden;
     transition: 300ms all;
     background: red;
