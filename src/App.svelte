@@ -60,6 +60,7 @@
   };
 
   const openMenu = () => {
+    displayLocalStorage();
     document.getElementById('side-nav').style.left = 'calc(100vw - 200px)';
   };
 
@@ -85,11 +86,11 @@
 
   <div id="answer" class="answer" />
   <div class="nav-menu">
-    <div id="open-btn" class="nav-button" on:click={openMenu}>History</div>
+    <div id="open-btn" class="open-button" on:click={openMenu}>History</div>
   </div>
   <div id="side-nav" class="side-nav">
-    <div class="history-items" on:click={closeMenu}>Close</div>
-    <div id="history" />
+    <div class="close-button" on:click={closeMenu}>Close</div>
+    <div id="history" class="history-items" />
   </div>
 </main>
 
@@ -161,17 +162,27 @@
     right: 0;
   }
 
-  .nav-button {
+  .open-button {
     padding: 15px;
     font-size: 1.5rem;
     cursor: pointer;
+    background: red;
+  }
+
+  .close-button {
+    padding: 15px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    background: red;
+    text-align: right;
+    color: black;
   }
 
   .side-nav {
     position: absolute;
     overflow: hidden;
     transition: 300ms all;
-    background: #ff3e00;
+    background: red;
     top: 0;
     left: 100vw;
     height: 100vh;
@@ -179,9 +190,10 @@
   }
 
   .history-items {
-    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     font-size: 1.5rem;
-    text-align: right;
-    cursor: pointer;
+    font-weight: bold;
   }
 </style>
